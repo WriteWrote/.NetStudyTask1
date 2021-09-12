@@ -6,13 +6,114 @@ namespace Task1
 {
   class Program
   {
+    private static List<int> traversalA(int[][] array)
+    {
+      List<int> seq = new List<int>();
+      int diff; // for simple sequens (like +diff)
+
+      for (int j = 0; j < array[0].Length - 1; j++)
+      {
+        if ((j & 1) == 0)
+        {
+          for (int i = array.Length - 1; i > 0; i--)
+          {
+            diff = array[i - 1][j] - array[i][j];
+            seq.Add(diff);
+          }
+
+          diff = array[0][j + 1] - array[0][j];
+          seq.Add(diff);
+        }
+        else
+        {
+          for (int i = 0; i < array.Length - 1; i++)
+          {
+            diff = array[i + 1][j] - array[i][j];
+            seq.Add(diff);
+          }
+
+          diff = array[array.Length - 1][j + 1] - array[array.Length - 1][j];
+          seq.Add(diff);
+        }
+      }
+
+      for (int i = 0; i < array.Length - 1; i++)
+      {
+        diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
+        seq.Add(diff);
+      }
+
+      return seq;
+    }
+
+    private static bool isOrdered(int[][] array)
+    {
+      List<int> travSeq = traversalA(array);
+      bool isOrdered = false;
+      for (int i = 0; i < travSeq.Count - 1; i++)
+      {
+        if (travSeq[i + 1] - travSeq[i] > 0)
+          isOrdered = true;
+        else
+        {
+          return false;
+        }
+      }
+      return isOrdered;
+    }
+
+    private static bool searchSequence(int[][] array)
+    {
+      List<int> seq = new List<int>();
+      int diff; // for simple sequens (like +diff) 
+
+      for (int j = 0; j < array[0].Length - 1; j++)
+      {
+        if ((j & 1) == 0)
+        {
+          for (int i = array.Length - 1; i > 0; i--)
+          {
+            diff = array[i - 1][j] - array[i][j];
+            seq.Add(diff);
+          }
+
+          diff = array[0][j + 1] - array[0][j];
+          seq.Add(diff);
+        }
+        else
+        {
+          for (int i = 0; i < array.Length - 1; i++)
+          {
+            diff = array[i + 1][j] - array[i][j];
+            seq.Add(diff);
+          }
+
+          diff = array[array.Length - 1][j + 1] - array[array.Length - 1][j];
+          seq.Add(diff);
+        }
+      }
+
+      for (int i = 0; i < array.Length - 1; i++)
+      {
+        diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
+        seq.Add(diff);
+      }
+
+      foreach (var VARIABLE in seq)
+      {
+        Console.WriteLine(VARIABLE);
+      }
+
+      return false;
+    }
+
     static void Main(string[] args)
     {
       // разобраться!!!
 
       Console.WriteLine("Hello World! Enter a filepath. If you don't want to change filepath, type 0:");
       string path = Console.ReadLine();
-      String file ="";
+      String file = "";
 
       if (path != null)
         if (path.Equals("0") || path.Equals(""))
@@ -56,41 +157,8 @@ namespace Task1
           }
         }
 
-        List<int> seq = new List<int>();
-        int diff; // for simple sequens (like +diff) 
-
-        for (int j = 0; j < array[0].Length - 1; j++)
-        {
-          if ((j & 1) == 0)
-          {
-            for (int i = array.Length - 1; i > 0; i--)
-            {
-              diff = array[i - 1][j] - array[i][j];
-              seq.Add(diff);
-            }
-
-            diff = array[0][j + 1] - array[0][j];
-            seq.Add(diff);
-          }
-          else
-          {
-            for (int i = 0; i < array.Length - 1; i++)
-            {
-              diff = array[i + 1][j] - array[i][j];
-              seq.Add(diff);
-            }
-
-            diff = array[array.Length - 1][j + 1] - array[array.Length - 1][j];
-            seq.Add(diff);
-          }
-        }
-
-        for (int i = 0; i < array.Length - 1; i++)
-        {
-          diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
-          seq.Add(diff);
-        }
-        Console.WriteLine(seq.ToString());
+        //searchSequence(array);
+        Console.WriteLine(isOrdered(array));
       }
       catch (Exception e)
       {
