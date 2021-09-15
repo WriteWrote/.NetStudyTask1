@@ -96,10 +96,9 @@ namespace Task1
       return seq;
     }
 
-    private static List<int> TraversalC(int[][] array)
+    private static List<int> TraversalC(int[][] array, int index)
     {
       List<int> seq = new List<int>();
-      int diff; // for simple sequens (like +diff)
 
       int n = array.GetLength(0);
       int count = n;
@@ -127,20 +126,52 @@ namespace Task1
       return seq;
     }
 
-    private static List<int> TraversalB(int[][] array)
+    private static int[][] moveArray(int[][] array)
     {
-      List<int> seq = new List<int>();
-      int diff; // for simple sequens (like +diff)
+      List<int>[] res = new List<int>[array.Length - 1];
 
+      for (int i = 1; i < array.Length; i++)
+      {
+        res[i] = new List<int>();
+        for (int j = array[0].Length - 1; j >= 0; j--)
+        {
+          //Console.WriteLine(i + " " + j);
+          Console.WriteLine(array[i][j]);
+          res[i].Add(array[i][j]);
+        }
+      }
+
+      int[][] result = new int[res.Length][];
+      result[0] = res[0].ToArray();
       
       
-      return seq;
+      return result;
+    }
+
+    private static List<int> TraversalB(int[][] array, List<int> list)
+    {
+      List<int> line = new List<int>();
+
+      for (int j = 0; j < array.Length; j++)
+      {
+        line.Add(array[0][j]);
+      }
+
+      list.AddRange(line);
+      //insert here changing of array
+
+      if (array.Length > 1)
+      {
+        TraversalB(moveArray(array), list);
+      }
+
+      return list;
     }
 
     private static bool IsOrdered(int[][] array)
     {
       //List<int> travSeq = TraversalA(array);
-      List<int> travSeq = TraversalC(array);
+      List<int> travSeq = TraversalB(array, new List<int>());
       bool isOrdered = false;
       for (int i = 0; i < travSeq.Count - 1; i++)
       {
