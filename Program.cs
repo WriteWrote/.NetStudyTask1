@@ -13,7 +13,7 @@ namespace Task1
         if (path.Equals("0") || path.Equals(""))
         {
           Console.WriteLine("The default filepath will be used.");
-          file = File.ReadAllText("D:\\XXX\\WorkingFiles\\C#_2021\\Task1\\Task1\\array1.txt");
+          file = File.ReadAllText("D:\\XXX\\WorkingFiles\\C#_2021\\Task1\\Task1\\array0.txt");
         }
         else
         {
@@ -25,11 +25,14 @@ namespace Task1
               Console.WriteLine("Succeed");
               file = File.ReadAllText(path);
             }
+            else
+            {
+              Console.WriteLine("Don't do such thing again. For your boldness you ought to rerun the program");
+            }
           }
           catch (Exception e)
           {
             Console.WriteLine(e);
-            Console.WriteLine("Don't do such thing again. For your boldness you ought to rerun the program");
             throw;
           }
         }
@@ -69,21 +72,25 @@ namespace Task1
           {
             diff = array[i - 1][j] - array[i][j];
             seq.Add(diff);
+            Console.Write(array[i][j]+" ");
           }
 
           diff = array[0][j + 1] - array[0][j];
           seq.Add(diff);
+          Console.Write(array[0][j]+" ");
         }
         else
         {
-          for (int i = 0; i < array.Length - 1; i++)
+          for (var i = 0; i < array.Length - 1; i++)
           {
             diff = array[i + 1][j] - array[i][j];
             seq.Add(diff);
+            Console.Write(array[i][j]+" ");
           }
 
-          diff = array[array.Length - 1][j + 1] - array[array.Length - 1][j];
+          diff = array[^1][j + 1] - array[^1][j];
           seq.Add(diff);
+          Console.Write(array[^1][j]+" ");
         }
       }
 
@@ -91,8 +98,9 @@ namespace Task1
       {
         diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
         seq.Add(diff);
+        Console.Write(array[i][array[0].Length - 1]+" ");
       }
-
+      Console.Write(array[^1][array[0].Length - 1]+" ");
       return seq;
     }
 
@@ -126,7 +134,7 @@ namespace Task1
       return seq;
     }
 
-    private static int[][] moveArray(int[][] array)
+    private static int[][] MoveArray(int[][] array)
     {
       List<int>[] res = new List<int>[array.Length - 1];
 
@@ -162,7 +170,7 @@ namespace Task1
 
       if (array.Length > 1)
       {
-        TraversalB(moveArray(array), list);
+        TraversalB(MoveArray(array), list);
       }
 
       return list;
@@ -170,12 +178,13 @@ namespace Task1
 
     private static bool IsOrdered(int[][] array)
     {
-      //List<int> travSeq = TraversalA(array);
-      List<int> travSeq = TraversalB(array, new List<int>());
+      List<int> travSeq = TraversalA(array);
+      //List<int> travSeq = TraversalB(array, new List<int>());
       bool isOrdered = false;
-      for (int i = 0; i < travSeq.Count - 1; i++)
+      int diff = travSeq[0];
+      for (int i = 0; i < travSeq.Count; i++)
       {
-        if (travSeq[i + 1] - travSeq[i] > 0)
+        if (travSeq[i]*diff >= 0)
           isOrdered = true;
         else
         {
