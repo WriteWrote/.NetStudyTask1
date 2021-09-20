@@ -72,12 +72,12 @@ namespace Task1
           {
             diff = array[i - 1][j] - array[i][j];
             seq.Add(diff);
-            Console.Write(array[i][j]+" ");
+            Console.Write(array[i][j] + " ");
           }
 
           diff = array[0][j + 1] - array[0][j];
           seq.Add(diff);
-          Console.Write(array[0][j]+" ");
+          Console.Write(array[0][j] + " ");
         }
         else
         {
@@ -85,12 +85,12 @@ namespace Task1
           {
             diff = array[i + 1][j] - array[i][j];
             seq.Add(diff);
-            Console.Write(array[i][j]+" ");
+            Console.Write(array[i][j] + " ");
           }
 
           diff = array[^1][j + 1] - array[^1][j];
           seq.Add(diff);
-          Console.Write(array[^1][j]+" ");
+          Console.Write(array[^1][j] + " ");
         }
       }
 
@@ -98,9 +98,10 @@ namespace Task1
       {
         diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
         seq.Add(diff);
-        Console.Write(array[i][array[0].Length - 1]+" ");
+        Console.Write(array[i][array[0].Length - 1] + " ");
       }
-      Console.Write(array[^1][array[0].Length - 1]+" ");
+
+      Console.Write(array[^1][array[0].Length - 1] + " ");
       return seq;
     }
 
@@ -134,25 +135,34 @@ namespace Task1
       return seq;
     }
 
+    private static int[][] ConvertArray(List<int>[] ex)
+    {
+      int[][] result = new int[ex.Length][];
+      for (int i = 0; i < ex.Length; i++)
+      {
+        result[i] = ex[i].ToArray();
+      }
+
+      return result;
+    }
+
     private static int[][] MoveArray(int[][] array)
     {
       List<int>[] res = new List<int>[array.Length - 1];
 
       for (int i = 1; i < array.Length; i++)
       {
-        res[i] = new List<int>();
+        res[i-1] = new List<int>();
         for (int j = array[0].Length - 1; j >= 0; j--)
         {
           //Console.WriteLine(i + " " + j);
-          Console.WriteLine(array[i][j]);
-          res[i].Add(array[i][j]);
+          //Console.WriteLine(array[i][j]);
+          res[i-1].Add(array[i][j]);
         }
       }
 
-      int[][] result = new int[res.Length][];
-      result[0] = res[0].ToArray();
-      
-      
+      int[][] result = ConvertArray(res);
+
       return result;
     }
 
@@ -160,14 +170,14 @@ namespace Task1
     {
       List<int> line = new List<int>();
 
-      for (int j = 0; j < array.Length; j++)
+      for (int j = 0; j < array[0].Length; j++)
       {
         line.Add(array[0][j]);
+        Console.WriteLine(array[0][j]);
       }
 
       list.AddRange(line);
-      //insert here changing of array
-
+//insert here changing of array
       if (array.Length > 1)
       {
         TraversalB(MoveArray(array), list);
@@ -178,13 +188,13 @@ namespace Task1
 
     private static bool IsOrdered(int[][] array)
     {
-      List<int> travSeq = TraversalA(array);
-      //List<int> travSeq = TraversalB(array, new List<int>());
+      //List<int> travSeq = TraversalA(array);
+      List<int> travSeq = TraversalB(array, new List<int>());
       bool isOrdered = false;
       int diff = travSeq[0];
       for (int i = 0; i < travSeq.Count; i++)
       {
-        if (travSeq[i]*diff >= 0)
+        if (travSeq[i] * diff >= 0)
           isOrdered = true;
         else
         {
