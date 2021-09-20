@@ -62,7 +62,7 @@ namespace Task1
     private static List<int> TraversalA(int[][] array)
     {
       List<int> seq = new List<int>();
-      int diff; // for simple sequens (like +diff)
+      int diff;
 
       for (int j = 0; j < array[0].Length - 1; j++)
       {
@@ -155,8 +155,6 @@ namespace Task1
         choppedArray[i - 1] = new List<int>();
         for (int j = array[0].Length - 1; j >= 0; j--)
         {
-          //Console.WriteLine(i + " " + j);
-          //Console.WriteLine(array[i][j]);
           choppedArray[i - 1].Add(array[i][j]);
         }
       }
@@ -179,14 +177,17 @@ namespace Task1
     {
       List<int> line = new List<int>();
 
-      for (int j = 0; j < array[0].Length; j++)
+      for (int j = 0; j < array[0].Length - 1; j++)
       {
-        line.Add(array[0][j]);
-        Console.WriteLine(array[0][j]);
+        line.Add(array[0][j + 1] - array[0][j]);
+        Console.Write(array[0][j] + " ");
       }
 
+      Console.Write(array[0][array[0].Length - 1] + " ");
+      if (array.Length > 1)
+        line.Add(array[1][array[0].Length - 1] - array[0][array[0].Length - 1]);
+
       list.AddRange(line);
-//insert here changing of array
       if (array.Length > 1)
       {
         TraversalB(MoveArray(array), list);
