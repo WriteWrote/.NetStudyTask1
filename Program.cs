@@ -148,20 +148,29 @@ namespace Task1
 
     private static int[][] MoveArray(int[][] array)
     {
-      List<int>[] res = new List<int>[array.Length - 1];
+      List<int>[] choppedArray = new List<int>[array.Length - 1];
 
       for (int i = 1; i < array.Length; i++)
       {
-        res[i-1] = new List<int>();
+        choppedArray[i - 1] = new List<int>();
         for (int j = array[0].Length - 1; j >= 0; j--)
         {
           //Console.WriteLine(i + " " + j);
           //Console.WriteLine(array[i][j]);
-          res[i-1].Add(array[i][j]);
+          choppedArray[i - 1].Add(array[i][j]);
         }
       }
 
-      int[][] result = ConvertArray(res);
+      int[][] convertedArray = ConvertArray(choppedArray);
+      int[][] result = new int[convertedArray[0].Length][];
+      for (int j = 0; j < convertedArray[0].Length; j++)
+      {
+        result[j] = new int[convertedArray.Length];
+        for (int i = 0; i < convertedArray.Length; i++)
+        {
+          result[j][i] = convertedArray[i][j];
+        }
+      }
 
       return result;
     }
