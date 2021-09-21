@@ -94,14 +94,28 @@ namespace Task1
         }
       }
 
-      for (int i = 0; i < array.Length - 1; i++)
+      int k;
+      if (array[0].Length % 2 == 0)
       {
-        diff = array[i + 1][array[0].Length - 1] - array[i][array[0].Length - 1];
-        seq.Add(diff);
-        Console.Write(array[i][array[0].Length - 1] + " ");
+        for (k = 0; k < array.Length - 1; k++)
+        {
+          diff = array[k + 1][array[0].Length - 1] - array[k][array[0].Length - 1];
+          seq.Add(diff);
+          Console.Write(array[k][array[0].Length - 1] + " ");
+        }
+        Console.Write(array[^1][array[0].Length - 1] + " ");
+      }
+      else
+      {
+        for (k = array.Length - 1; k > 0; k--)
+        {
+          diff = array[k - 1][array[0].Length - 1] - array[k][array[0].Length - 1];
+          seq.Add(diff);
+          Console.Write(array[k][array[0].Length - 1] + " ");
+        }
+        Console.Write(array[0][array[0].Length - 1] + " ");
       }
 
-      Console.Write(array[^1][array[0].Length - 1] + " ");
       return seq;
     }
 
@@ -198,8 +212,8 @@ namespace Task1
 
     private static bool IsOrdered(int[][] array)
     {
-      //List<int> travSeq = TraversalA(array);
-      List<int> travSeq = TraversalB(array, new List<int>());
+      List<int> travSeq = TraversalA(array);
+      //List<int> travSeq = TraversalB(array, new List<int>());
       bool isOrdered = false;
       int diff = travSeq[0];
       for (int i = 0; i < travSeq.Count; i++)
